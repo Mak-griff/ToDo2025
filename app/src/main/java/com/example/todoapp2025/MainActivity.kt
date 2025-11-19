@@ -1,6 +1,6 @@
 package com.example.todoapp2025
-import com.example.todoapp2025.data.Todo
 
+import com.example.todoapp2025.data.Todo
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
 import com.example.todoapp2025.vm.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

@@ -16,12 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 class ReferenceActivity4 : ComponentActivity() {
+    // Switches between screens
+    // Does not have one for Tic Tac Toe screen because that is the current screen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -83,13 +84,15 @@ fun TicTacToeScreen(
     }
 
     // CPU chooses random valid move
+    // Computer's turn
     fun cpuMove() {
+        // Do nothing when the game is over
         if (gameOver) return
 
         val empty = board.mapIndexed { i, v -> if (v == "") i else null }
             .filterNotNull()
 
-        // No more spots available
+        // The game is a draw if no one has won and the board is full
         if (empty.isEmpty()) {
            gameMessage = "Draw!"
             return
@@ -98,6 +101,8 @@ fun TicTacToeScreen(
         val choice = empty.random()
         board = board.toMutableList().also { it[choice] = "O" }
 
+        // If the computer wins on its turn, set the game to over
+        // Otherwise the user gets a turn
         if (checkWin("O")) {
             gameMessage = "Computer Wins!"
             gameOver = true
@@ -107,6 +112,7 @@ fun TicTacToeScreen(
         }
     }
 
+    // Navigation drawer
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -208,11 +214,15 @@ fun TicTacToeScreen(
                                         .border(2.dp, Color.Black)
                                         .background(Color(0xFFF2F2F2))
                                         .clickable(enabled = !gameOver && board[index] == "") {
+                                            // Take the user's input on their turn
                                             if (playerTurn) {
                                                 board = board.toMutableList().also {
                                                     it[index] = "X"
                                                 }
 
+                                                // If the user wins, the game is over
+                                                // Otherwise the computer gets a turn
+                                                // A draw will be determined during the computer's turn if applicable
                                                 if (checkWin("X")) {
                                                     gameMessage = "You Win!"
                                                     gameOver = true
@@ -238,11 +248,14 @@ fun TicTacToeScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
+                // Restart game button below the board
                 Button(
                     onClick = {
                         board = List(9) { "" }
                         playerTurn = true
                         gameOver = false
+
+                        // User goes first
                         gameMessage = "Your Turn (X)"
                     }
                 ) {

@@ -16,7 +16,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 class ReferenceActivity1 : ComponentActivity() {
+    // Switches between screens
+    // Does not have one for Cat screen because that is the current screen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,6 +63,7 @@ fun CatScreen(onNavigateToMain: () -> Unit, onNavigateToLight: () -> Unit, onNav
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    // Navigation drawer
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {

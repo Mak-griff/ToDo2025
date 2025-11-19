@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 class ReferenceActivity3 : ComponentActivity() {
+    // Switches between screens
+    // Does not have one for Guess screen because that is the current screen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -61,10 +62,11 @@ fun GuessingGameScreen(
     var range by remember { mutableStateOf(100) }
     var guessInput by remember { mutableStateOf("") }
     var targetNumber by remember { mutableStateOf((1..range).random()) }
-    var message by remember { mutableStateOf("Make a guess!") }
+    var message by remember { mutableStateOf("Enter your guess") }
     val guesses = remember { mutableStateListOf<Int>() }
     var expanded by remember { mutableStateOf(false) }
 
+    // Navigation drawer
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {

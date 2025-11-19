@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.ActionBar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +26,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,6 +33,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 
 class ReferenceActivity2 : ComponentActivity() {
+    // Switches between screens
+    // Does not have one for Light screen because that is the current screen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -76,12 +76,13 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNav
     // Track on/off state
     var isLightOn by remember { mutableStateOf(true) }
 
-    // Backgrounds
+    // Background color switches when light is switched on and off
     val backgroundColor = if (isLightOn) Color(0xFFFFF8E1) else Color(0xFF1A1A1A)
 
     // Text color for readability on bright/dark backgrounds
     val textColor = if (isLightOn) Color(0xFF3A3A3A) else Color(0xFFE8E8E8)
 
+    // Navigation drawer
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -166,7 +167,7 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNav
             }
         ) { padding ->
 
-            // ----- Background wrapper -----
+            // Background wrapper
             Box(
                 modifier = Modifier
                     .padding(padding)
@@ -182,13 +183,12 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNav
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    // ----- Glow halo when light is ON -----
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
-                        // Glow halo BEHIND the image
+                        // Glow will appear behind image only when light is on
                         if (isLightOn) {
                             Box(
                                 modifier = Modifier
@@ -207,7 +207,9 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNav
                             )
                         }
 
-                        // Light bulb image ON TOP of glow
+                        // Light bulb image
+                        // On for bulb with light
+                        // Off for bulb without light
                         Image(
                             painter = painterResource(
                                 id = if (isLightOn) R.drawable.on else R.drawable.off
@@ -223,7 +225,7 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNav
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // ----- Text stays readable in both modes -----
+                    // Change text color to ensure readability
                     Text(
                         text = "Try switching the light on and off",
                         fontSize = 18.sp,
