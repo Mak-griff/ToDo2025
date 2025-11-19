@@ -39,9 +39,15 @@ class ReferenceActivity1 : ComponentActivity() {
                         startActivity(intent)
                         finish()
                     },
-
                     onNavigateToGuess = {
-
+                        val intent = Intent(this, ReferenceActivity3::class.java)
+                        startActivity(intent)
+                        finish()
+                    },
+                    onNavigateToTic = {
+                        val intent = Intent(this, ReferenceActivity4::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 )
             }
@@ -51,7 +57,7 @@ class ReferenceActivity1 : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CatScreen(onNavigateToMain: () -> Unit, onNavigateToLight: () -> Unit, onNavigateToGuess: () -> Unit) {
+fun CatScreen(onNavigateToMain: () -> Unit, onNavigateToLight: () -> Unit, onNavigateToGuess: () -> Unit, onNavigateToTic: () -> Unit) {
     val scrollState = rememberScrollState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -106,7 +112,15 @@ fun CatScreen(onNavigateToMain: () -> Unit, onNavigateToLight: () -> Unit, onNav
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
 
-
+                NavigationDrawerItem(
+                    label = { Text("Tic Tac Toe") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        onNavigateToTic()
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
             }
         }
     ) {

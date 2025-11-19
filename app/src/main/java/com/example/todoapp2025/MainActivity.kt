@@ -96,11 +96,24 @@ fun App(vm: TodoViewModel = viewModel()) {
                     )
 
                     NavigationDrawerItem(
-                        label = { Text("Guess") },
+                        label = { Text("Guessing Game") },
                         selected = false,
                         onClick = {
                             scope.launch { drawerState.close() }
                             val intent = Intent(context, ReferenceActivity3::class.java)
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.padding(
+                            NavigationDrawerItemDefaults.ItemPadding
+                        )
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text("Tic Tac Toe") },
+                        selected = false,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            val intent = Intent(context, ReferenceActivity4::class.java)
                             context.startActivity(intent)
                         },
                         modifier = Modifier.padding(

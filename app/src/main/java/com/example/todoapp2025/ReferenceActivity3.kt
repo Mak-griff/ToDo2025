@@ -38,6 +38,11 @@ class ReferenceActivity3 : ComponentActivity() {
                     onNavigateToLight = {
                         startActivity(Intent(this, ReferenceActivity2::class.java))
                         finish()
+                    },
+                    onNavigateToTic = {
+                        val intent = Intent(this, ReferenceActivity4::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 )
             }
@@ -48,10 +53,7 @@ class ReferenceActivity3 : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GuessingGameScreen(
-    onNavigateToMain: () -> Unit,
-    onNavigateToCat: () -> Unit,
-    onNavigateToLight: () -> Unit
-) {
+    onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNavigateToLight: () -> Unit, onNavigateToTic: () -> Unit) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
@@ -105,6 +107,15 @@ fun GuessingGameScreen(
                     selected = true,
                     onClick = {
                         scope.launch { drawerState.close() }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+                NavigationDrawerItem(
+                    label = { Text("Tic Tac Toe") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        onNavigateToTic()
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )

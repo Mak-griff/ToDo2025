@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.ActionBar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,6 +50,16 @@ class ReferenceActivity2 : ComponentActivity() {
                         val intent = Intent(this, ReferenceActivity1::class.java)
                         startActivity(intent)
                         finish()
+                    },
+                    onNavigateToGuess = {
+                        val intent = Intent(this, ReferenceActivity3::class.java)
+                        startActivity(intent)
+                        finish()
+                    },
+                    onNavigateToTic = {
+                        val intent = Intent(this, ReferenceActivity4::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 )
             }
@@ -58,7 +69,7 @@ class ReferenceActivity2 : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit) {
+fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit, onNavigateToGuess: () -> Unit, onNavigateToTic: () -> Unit) {
     val scrollState = rememberScrollState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -109,7 +120,26 @@ fun LightScreen(onNavigateToMain: () -> Unit, onNavigateToCat: () -> Unit) {
                         scope.launch { drawerState.close() }
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
 
+                NavigationDrawerItem(
+                    label = { Text("Guessing Game") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        onNavigateToGuess()
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
+                NavigationDrawerItem(
+                    label = { Text("Tic Tac Toe") },
+                    selected = false,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        onNavigateToTic()
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
         }

@@ -15,6 +15,9 @@
             android:name=".ReferenceActivity3">
         </activity>
         <activity
+            android:name=".ReferenceActivity4">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
